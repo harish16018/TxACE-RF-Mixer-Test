@@ -122,13 +122,14 @@ PSA.sweep(psa, 8192, '110e-3')
 PSA.avg_type(psa, 'LOG')
 PSA.detection(psa, 'OFF', 'SAMP')
 PSA.pre_amp(psa, 'OFF')
-PSA.avg_en(psa, 'ON')
-PSA.avg(psa,2000)
 PSA.wait_for_op(psa,TIMEOUT)
 
 for a in range(50):
+  PSA.avg_en(psa, 'ON')
+  PSA.avg(psa,2000)
   print("On M7, trace "+str(a+1))
   Meas.measure_noise(psa, r"C:\Users\HSY210000\Documents\Measurements\Measurement7\meas"+str(a+1)+".csv")
+  PSA.avg_en(psa, 'OFF')
 
 
 
@@ -143,13 +144,15 @@ PSA.avg_type(psa, 'RMS')
 PSA.detection(psa, 'OFF', 'SAMP')
 PSA.pre_amp(psa, 'OFF')
 PSA.avg_en(psa, 'OFF')
-PSA.avg_en(psa, 'ON')
-PSA.avg(psa,2000)
 PSA.wait_for_op(psa,TIMEOUT)
 
 for a in range(50):
+  PSA.avg_en(psa, 'ON')
+  PSA.avg(psa,2000)
   print("On M8, trace "+str(a+1))
   Meas.measure_noise(psa, r"C:\Users\HSY210000\Documents\Measurements\Measurement8\meas"+str(a+1)+".csv")
+  PSA.avg_en(psa, 'OFF')
+
 
 # M9
 
@@ -166,8 +169,11 @@ PSA.avg(psa,2000)
 PSA.wait_for_op(psa,TIMEOUT)
 
 for a in range(50):
+  PSA.avg_en(psa, 'ON')
+  PSA.avg(psa,2000)
   print("On M9, trace "+str(a+1))
   Meas.measure_noise(psa, r"C:\Users\HSY210000\Documents\Measurements\Measurement9\meas"+str(a+1)+".csv")
+  PSA.avg_en(psa, 'OFF')
 
 
 
@@ -187,8 +193,11 @@ PSA.avg(psa,2000)
 PSA.wait_for_op(psa,TIMEOUT)
 
 for a in range(50):
+  PSA.avg_en(psa, 'ON')
+  PSA.avg(psa,2000)
   print("On M10, trace "+str(a+1))
   Meas.measure_noise(psa, r"C:\Users\HSY210000\Documents\Measurements\Measurement10\meas"+str(a+1)+".csv")
+  PSA.avg_en(psa, 'OFF')
 
 
 # M11
