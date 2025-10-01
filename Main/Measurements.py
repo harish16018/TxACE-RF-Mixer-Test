@@ -8,7 +8,7 @@ import re
 
 ## Noise measurement 
 
-def measure_noise (psa, csv_path):
+def measure_noise (psa, csv_path="", save_trace=False):
   
   trace_data = PSA.get_trace(psa)
 
@@ -24,10 +24,46 @@ def measure_noise (psa, csv_path):
     x_val.append(float(values[x].split(', ')[0]))
     amp_val.append(float(values[x].split(', ')[1]))
 
-  Utility.save_trace_to_csv(csv_path, x_val, amp_val)
+  if save_trace:
+    Utility.save_trace_to_csv(csv_path, x_val, amp_val)
 
   averaged_noise = sum(amp_val) / len(amp_val)
 
   return averaged_noise
 
+
+
+## IF Conversion Gain measurement
+
+def measure_IF_tone (psa, marker_x_pos, avg_type, avg_count):
+
+  timeout = 60000 # VISA timeout 60s
+  
+  PSA.set_marker(psa, 1, marker_x_pos) # Set marker 1 x-position
+
+  PSA.avg_en(psa, 1) # Turn averaging on
+
+  PSA.avg_type(psa, avg_type) # Set averaging type
+
+  PSA.avg(psa, avg_count) # Perform averaging
+
+  PSA.wait_for_op(psa, timeout) # Wait for averaging to complete
+
+  y_pos = PSA.get_marker(psa, 1) # Get marker 1 y-position
+
+  PSA.avg_en(psa, 0) # Turn averaging off
+
+  return y_pos # Return marker 1 y-position
+
+
+
+
+  
+
+  
+
+  
+
+
+  
   

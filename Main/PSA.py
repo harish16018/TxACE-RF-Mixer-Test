@@ -9,7 +9,7 @@ def get_handle (rm, instr_id):
   try:
     handle = rm.open_resource(instr_id)
   except:
-    print("Unable to open GPIB connection to the PSA. Exiting...")
+    print("Unable to open connection to PSA. Check LAN connection and try again. Exiting...")
     sys.exit()
   
   return handle
