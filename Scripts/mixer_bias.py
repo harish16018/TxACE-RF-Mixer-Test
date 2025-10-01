@@ -17,8 +17,64 @@ current_A =
 OVP_B = 
 current_B =
 ####################################
+v1_start =
+v1_stop =  
+v1_step = 
+
+v2_start =
+v2_stop =  
+v2_step = 
+####################################
+hex_code = 
+####################################
 dmm_samples = 20
 ####################################
+RF_init_freq = 
+RF_init_pow =
+
+LO_init_freq = 
+LO_init_pow =
+
+shift_reg_VDD_low =
+shift_reg_VDD_normal = 
+####################################
+if_ref_lvl = 
+if_auto_att_en = 
+if_man_att = 
+if_center_freq = 
+if_span = 
+if_auto_res_ban_en = 
+if_auto_vid_ban_en = 
+if_res_ban = 
+if_sweep_points = 
+if_sweep_time = 
+if_auto_det_en =
+if_man_det =
+if_vert_scal = 
+if_int_pre_amp_en =
+
+if_marker_x_pos = 
+if_avg_type =
+if_avg_count = 
+##################################
+noise_ref_lvl = 
+noise_auto_att_en = 
+noise_man_att = 
+noise_center_freq = 
+noise_span = 
+noise_auto_res_ban_en = 
+noise_auto_vid_ban_en = 
+noise_res_ban = 
+noise_sweep_points = 
+noise_sweep_time = 
+noise_auto_det_en =
+noise_man_det =
+noise_vert_scal = 
+noise_int_pre_amp_en =
+##################################
+output_file_dir = 
+
+
 
 
 rm = pyvisa.ResourceManager();
@@ -62,7 +118,7 @@ DMM.set_samples(dmm, sample_count=dmm_samples)
 # Create arrays of voltage values
 
 bias_v1 = Util.generate_array(v1_start, v1_stop, v1_step)
-bias_v2 = Util.generate_array(v1_start, v1_stop, v1_step)
+bias_v2 = Util.generate_array(v2_start, v2_stop, v2_step)
 
 # Initialize arrays for measured results
 
@@ -141,6 +197,8 @@ for j in range (len(bias_v1)):
      IF_gain[j][k] = Meas.measure_IF_tone(psa, marker_x_pos=if_marker_x_pos, avg_type=if_avg_type, avg_count=if_avg_count)
 
      # Turn off RF MXG
+     MXG.set_freq(mxg_RF, freq=RF_off_freq)
+     MXG.set_power(mxg_RF, power=RF_off_pow)
      MXG.output_en(mxg_RF, output_en=0)
 
      # Configure PSA for noise measurement
