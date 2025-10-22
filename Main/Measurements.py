@@ -1,18 +1,23 @@
 # Measurements
 
 from . import PSA
+from . import PXA
 from . import Utility
 import re
 
 
 
-## Noise measurement 
+## PSA Noise measurement 
 
-def measure_noise (psa, csv_path="", save_trace=False):
+def measure_noise (handle, csv_path="", save_trace=False, instr='PSA'):
   
-  trace_data = PSA.get_trace(psa)
+  if(instr == 'PSA'):
+   trace_data = PSA.get_trace(handle)
+   substr = r"Trace \d\n.*?,.*?\n" # This is the unique substring with which the header string teriminates
+  elif(instr == 'PXA'):
+   trace_data = PXA.get_trace(handle)
+   substr = r"Trace \d\n.*?,.*?\n" #
 
-  substr = r"Trace \d\n.*?,.*?\n" # This is the unique substring with which the header string teriminates
   idx = re.search(substr, trace_data).end() # Find where the header string terminates
   val_str = trace_data[idx:] # Extracting just the trace values in the string
   values = val_str.split("\n")[:-2] # Convert into list, ignore last 2 empty strings in the end of the list due to splitting by '\n'
